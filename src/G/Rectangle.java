@@ -4,7 +4,7 @@
  * @inv verifica se cada lado do retangulo interceta com a trajetoria de reta
  */
 
-package B;
+package G;
 
 class Rectangle {
      Ponto a,b,c,d;
@@ -35,7 +35,7 @@ class Rectangle {
                 boolean c = Line.intersection(x.getC(), x.getD(), y[j].trajectory.getA(), y[j].trajectory.getB());
                 boolean d = Line.intersection(x.getA(), x.getD(), y[j].trajectory.getA(), y[j].trajectory.getB());
 
-                if(a != false || b != false || c != false || d != false){
+                if(a || b || c || d){
                     return true;
                 }
             }

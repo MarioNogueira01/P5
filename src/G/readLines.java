@@ -1,3 +1,5 @@
+package G;
+
 class readLines {
     private String inPut;
     public readLines(String inPut){
