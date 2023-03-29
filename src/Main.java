@@ -13,7 +13,7 @@ public class Main {
         Scanner sc = new Scanner (System.in);
 
         int [] line = readLines.readLine(sc.nextLine());
-        int ola;
+
         Constructor<?> constructor;
         Class<?> cl;
         FiguraGeometrica f;
