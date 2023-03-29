@@ -1,3 +1,4 @@
+package G;
 import java.lang.reflect.*;
 import java.util.*;
 public class Main {
@@ -15,15 +16,20 @@ public class Main {
         int [] line = readLines.readLine(sc.nextLine());
 
         Constructor<?> constructor;
-        Class<?> cl;
+        ArrayList<Ponto> pontos = new ArrayList<>();
         FiguraGeometrica f;
         String s;
         String [] aos;
+        for (int i = 0; i<line.length;i++){
+            Ponto cordenada = new Ponto(line[i],line[i+1]);
+            pontos.add(cordenada);
+        }
+        Trajetoria traj = new Trajetoria(pontos);
         while (sc.hasNextLine()) {
             s = sc.nextLine();
             aos = s.split(" ");
             try {
-                cl = Class.forName(capital(aos[0]));
+                Class<?> cl = Class.forName(capital(aos[0]));// da a letra
                 constructor = cl.getConstructor (new Class[] {String.class});
                 f = (FiguraGeometrica) constructor.newInstance(s);
                 System.out.println(f);

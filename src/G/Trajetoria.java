@@ -6,7 +6,7 @@
 package G;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO: mudar tudo para como tinha
 public class Trajetoria {
 
     private ArrayList<Ponto> ponto;
@@ -33,6 +33,7 @@ public class Trajetoria {
         sb.append("]");
         return sb.toString();
     }
+
     public boolean vertraj(){
         if(ponto.size() < 3){
             return false;

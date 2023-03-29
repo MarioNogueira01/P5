@@ -6,13 +6,15 @@
 
 package G;
 
-class Rectangle {
+class Rectangle extends FiguraGeometrica {
      Ponto a,b,c,d;
-    public Rectangle(Ponto[] x){
-        this.a = x[0];
-        this.b = x[1];
-        this.c = x[2];
-        this.d = x[3];
+    public Rectangle(String s){
+        super(s);
+        String[] x = s.split(" ",-1);
+        this.a = new Ponto(Integer.parseInt(x[1]), Integer.parseInt(x[2]));
+        this.b = new Ponto(Integer.parseInt(x[3]), Integer.parseInt(x[4]));
+        this.c = new Ponto(Integer.parseInt(x[5]), Integer.parseInt(x[6]));
+        this.d = new Ponto(Integer.parseInt(x[7]), Integer.parseInt(x[8]));
     }
 
     public Ponto getA(){return a;}
@@ -27,13 +29,13 @@ class Rectangle {
         }
     }
 
-    public static boolean isIntersecting(Rectangle x, Trajectory[] y) {//confirma se o rectangulo esta a interseptar com o segmento de reta
+    public static boolean isIntersecting(Rectangle x, Trajetoria[] y) {//confirma se o rectangulo esta a interseptar com o segmento de reta
         boolean test = false;
             for (int j = 0;j<y.length;j++){
-                boolean a = Line.intersection(x.getA(), x.getB(), y[j].trajectory.getA(), y[j].trajectory.getB());
-                boolean b = Line.intersection(x.getB(), x.getC(), y[j].trajectory.getA(), y[j].trajectory.getB());
-                boolean c = Line.intersection(x.getC(), x.getD(), y[j].trajectory.getA(), y[j].trajectory.getB());
-                boolean d = Line.intersection(x.getA(), x.getD(), y[j].trajectory.getA(), y[j].trajectory.getB());
+                boolean a = Line.intersection(x.getA(), x.getB(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
+                boolean b = Line.intersection(x.getB(), x.getC(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
+                boolean c = Line.intersection(x.getC(), x.getD(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
+                boolean d = Line.intersection(x.getA(), x.getD(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
 
                 if(a || b || c || d){
                     return true;
