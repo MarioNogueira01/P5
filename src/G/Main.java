@@ -1,7 +1,6 @@
 package G;
 import java.lang.reflect.*;
 import java.util.*;
-import G.Circunferencia;
 public class Main {
     public static String capital(String s) {
         String res = s.toLowerCase();
@@ -24,12 +23,13 @@ Retangulo 0 0 0 4 4 4 4 0
 
         int [] line = readLines.readLine(sc.nextLine());
 
+        List<FiguraGeometrica> obstaculos = new ArrayList<>();
         Constructor<?> constructor;
         ArrayList<Ponto> pontos = new ArrayList<>();
         FiguraGeometrica f;
         String s;
         String [] aos;
-        for (int i = 0; i<line.length-1;i++){
+        for (int i = 0; i<line.length-1;i+=2){
             Ponto cordenada = new Ponto(line[i],line[i+1]);
             pontos.add(cordenada);
         }
@@ -42,13 +42,14 @@ Retangulo 0 0 0 4 4 4 4 0
                 constructor = cl.getConstructor (new Class<?>[] { String.class });
                 f = (FiguraGeometrica) constructor.newInstance(s);
                 f.check();
-                System.out.println(f);
+                obstaculos.add(f);
                 // Your code here: guarde aqui o seu obstaculo
             }
             catch (Exception e) {
                 System.out.println("Tipo de obstaculo desconhecido");
             }
         }
+        System.out.println(String.format("%.2f",traj.avaluation(obstaculos)));
         sc.close();
     }
 }

@@ -19,6 +19,23 @@ class Retangulo extends FiguraGeometrica {
         this.d = new Ponto(Integer.parseInt(x[7]), Integer.parseInt(x[8]));
     }
 
+    @Override
+    public boolean intercecao(Trajectory y) {
+        ArrayList<Ponto> pontos = y.getpontos();
+        boolean test = false;
+        for (int j = 0;j<pontos.size();j++){
+            boolean a = Line.intersection(this.getA(), this.getB(), pontos.get(j), pontos.get(j+1));
+            boolean b = Line.intersection(this.getB(), this.getC(), pontos.get(j), pontos.get(j+1));
+            boolean c = Line.intersection(this.getC(), this.getD(), pontos.get(j), pontos.get(j+1));
+            boolean d = Line.intersection(this.getA(), this.getD(), pontos.get(j), pontos.get(j+1));
+
+            if(a || b || c || d){
+                return true;
+            }
+        }
+        return test;
+    }
+
     public Ponto getA(){return a;}
     public Ponto getB(){return b;}
     public Ponto getC(){return c;}
@@ -30,21 +47,5 @@ class Retangulo extends FiguraGeometrica {
             System.out.println("Retangulo:vi");
             System.exit(0);
         }
-    }
-    //TODO: verificar se esta certo quando mudar a trajetoria
-    public static boolean isIntersecting(Retangulo x, Trajectory y) {//confirma se o rectangulo esta a interseptar com o segmento de reta
-        ArrayList<Ponto> pontos = y.getpontos();
-        boolean test = false;
-            for (int j = 0;j<pontos.size();j++){
-                boolean a = Line.intersection(x.getA(), x.getB(), pontos.get(j), pontos.get(j+1));
-                boolean b = Line.intersection(x.getB(), x.getC(), pontos.get(j), pontos.get(j+1));
-                boolean c = Line.intersection(x.getC(), x.getD(), pontos.get(j), pontos.get(j+1));
-                boolean d = Line.intersection(x.getA(), x.getD(), pontos.get(j), pontos.get(j+1));
-
-                if(a || b || c || d){
-                    return true;
-                }
-            }
-        return test;
     }
 }
