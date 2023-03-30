@@ -9,7 +9,7 @@ public class Circunferencia extends FiguraGeometrica{
         super(s);
         String[] x = s.split(" ",-1);
         this.a = new Ponto(Integer.parseInt(x[1]), Integer.parseInt(x[2]));
-        this.raio = raio;
+        this.raio = Integer.parseInt(x[3]);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class Circunferencia extends FiguraGeometrica{
 
     @Override
     public void check(){
-        if (raio < 0) {
-            System.out.println("Circunferencia vi");
+        if (this.raio < 0) {
+            System.out.println("Circunferencia: vi");
             System.exit(0);
         }
     }

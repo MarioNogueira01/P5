@@ -10,7 +10,6 @@ public class Triangulo extends FiguraGeometrica {
         this.a = new Ponto(Integer.parseInt(x[1]), Integer.parseInt(x[2]));
         this.b = new Ponto(Integer.parseInt(x[3]), Integer.parseInt(x[4]));
         this.c = new Ponto(Integer.parseInt(x[5]), Integer.parseInt(x[6]));
-        check();
     }
 
     @Override

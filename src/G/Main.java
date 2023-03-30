@@ -10,14 +10,6 @@ public class Main {
         final String answer = sb.toString();
         return answer;
     }
-    /*
-2 2 4 4 6 8
-Circunferencia 2 2 -1
-Triangulo 0 0 3 3 2 0
-Retangulo 0 0 0 4 4 4 4 0
-     */
-
-
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner (System.in);
 
@@ -43,12 +35,13 @@ Retangulo 0 0 0 4 4 4 4 0
                 f = (FiguraGeometrica) constructor.newInstance(s);
                 f.check();
                 obstaculos.add(f);
-                // Your code here: guarde aqui o seu obstaculo
             }
             catch (Exception e) {
                 System.out.println("Tipo de obstaculo desconhecido");
+                System.exit(0);
             }
         }
+        //TODO: ver resultado final o que esta a dar mal
         System.out.println(String.format("%.2f",traj.avaluation(obstaculos)));
         sc.close();
     }
