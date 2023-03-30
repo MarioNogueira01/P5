@@ -15,6 +15,7 @@ public class Triangulo extends FiguraGeometrica {
     public Ponto getB(){return b;}
     public Ponto getC(){return c;}
 
+    @Override
     public void check(){
         if(b.dist(a) + b.dist(c) > a.dist(c) || c.dist(a) + c.dist(b) > a.dist(b) || a.dist(c) + a.dist(b) <= b.dist(c)){
             System.out.println("Triangulo:vi");

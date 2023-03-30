@@ -6,9 +6,11 @@
 
 package G;
 
-class Rectangle extends FiguraGeometrica {
+import java.util.ArrayList;
+
+class Retangulo extends FiguraGeometrica {
      Ponto a,b,c,d;
-    public Rectangle(String s){
+    public Retangulo(String s){
         super(s);
         String[] x = s.split(" ",-1);
         this.a = new Ponto(Integer.parseInt(x[1]), Integer.parseInt(x[2]));
@@ -22,20 +24,22 @@ class Rectangle extends FiguraGeometrica {
     public Ponto getC(){return c;}
     public Ponto getD(){return d;}
 
-    public static void check(Rectangle x){//confirma que e um rectangulo
-        if (x.getA().dist(x.getC()) != x.getB().dist(x.getD()) || x.getA().dist(x.getC()) == 0){
+    @Override
+    public void check(){//confirma que e um rectangulo
+        if (this.a.dist(this.c) != this.b.dist(this.d) && this.a.dist(this.c) == 0){
             System.out.println("Retangulo:vi");
             System.exit(0);
         }
     }
     //TODO: verificar se esta certo quando mudar a trajetoria
-    public static boolean isIntersecting(Rectangle x, Trajectory[] y) {//confirma se o rectangulo esta a interseptar com o segmento de reta
+    public static boolean isIntersecting(Retangulo x, Trajectory y) {//confirma se o rectangulo esta a interseptar com o segmento de reta
+        ArrayList<Ponto> pontos = y.getpontos();
         boolean test = false;
-            for (int j = 0;j<y.length;j++){
-                boolean a = Line.intersection(x.getA(), x.getB(), y[j].getA(j), y[j].getB(j));
-                boolean b = Line.intersection(x.getB(), x.getC(), y[j].getA(j), y[j].getB(j));
-                boolean c = Line.intersection(x.getC(), x.getD(), y[j].getA(j), y[j].getB(j));
-                boolean d = Line.intersection(x.getA(), x.getD(), y[j].getA(j), y[j].getB(j));
+            for (int j = 0;j<pontos.size();j++){
+                boolean a = Line.intersection(x.getA(), x.getB(), pontos.get(j), pontos.get(j+1));
+                boolean b = Line.intersection(x.getB(), x.getC(), pontos.get(j), pontos.get(j+1));
+                boolean c = Line.intersection(x.getC(), x.getD(), pontos.get(j), pontos.get(j+1));
+                boolean d = Line.intersection(x.getA(), x.getD(), pontos.get(j), pontos.get(j+1));
 
                 if(a || b || c || d){
                     return true;

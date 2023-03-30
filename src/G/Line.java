@@ -14,6 +14,7 @@ class Line {
         this.b = y;
     }
 
+
     public Ponto getA() { return a; }
     public Ponto getB() { return b; }
 

@@ -6,39 +6,40 @@
 package G;
 import java.util.ArrayList;
 import java.util.List;
-//TODO: mudar tudo para como tinha
+
 public class Trajectory {
 
-    public static Line[] trajectory;
+    private ArrayList<Ponto> ponto;
 
 
-    public Trajectory(Line[] traj) {
-        trajectory = traj;
+    public Trajectory(ArrayList<Ponto> ponto) {
+        this.ponto = ponto;
     }
 
-    public static Ponto getA(int i){
-        return trajectory[i].getA();
-    }
-    public static Ponto getB(int i){
-        return trajectory[i].getB();
+    public ArrayList<Ponto> getpontos(){
+        return ponto;
     }
 
-    public static String toPrint_S(Trajectory x){
-        StringBuilder st = new StringBuilder();
-        int n = trajectory.length;
-        for (Line line : trajectory) {
-            st.append(Ponto.toPrint(line.getA())).append(" ");
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < ponto.size(); i++) {
+            sb.append(ponto.get(i).toString());
+            if (i < ponto.size() - 1) {
+                sb.append(" ");
+            }
         }
-        st.append(Ponto.toPrint(trajectory[n - 1].getB()));
-        return st.toString();
+        sb.append("]");
+        return sb.toString();
     }
-
     public boolean vertraj(){
-        if(trajectory.length < 2){
+        if(ponto.size() < 3){
             return false;
         }
-        for(int i = 1; i < trajectory.length; i++) {
-            if (Trajectory.getA(i).getX()> Trajectory.getB(i).getX() && Trajectory.getA(i-1).getY() > Trajectory.getA(i-1).getX()){
+        int n = ponto.size();
+        for(int i = 1; i < n; i++) {
+            if (ponto.get(i-1).getX()> ponto.get(i).getX() && ponto.get(i-1).getY() > ponto.get(i).getY()){
                 return false;
             }
         }
@@ -47,8 +48,8 @@ public class Trajectory {
 
     public double distance(){
         double dist = 0;
-        for(int i = 0; i < trajectory.length; i++){
-            dist += Trajectory.getA(i).dist(Trajectory.getB(i));
+        for(int i = 0; i < ponto.size()-1; i++){
+            dist += ponto.get(i).dist(ponto.get(i+1));
         }
         return dist;
     }
