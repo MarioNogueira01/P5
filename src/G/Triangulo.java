@@ -15,12 +15,10 @@ public class Triangulo extends FiguraGeometrica {
     public Ponto getB(){return b;}
     public Ponto getC(){return c;}
 
-    //TODO:verificar este check e modificar
     public void check(){
-        if(a.dist(b) + b.dist(c) <= c.dist(a) || a.dist(b) + a.dist(c) <= b.dist(c) || b.dist(c) + a.dist(c) <= a.dist(b)){
+        if(b.dist(a) + b.dist(c) > a.dist(c) || c.dist(a) + c.dist(b) > a.dist(b) || a.dist(c) + a.dist(b) <= b.dist(c)){
             System.out.println("Triangulo:vi");
             System.exit(0);
         }
     }
-
 }

@@ -14,4 +14,13 @@ class readLines {
         }
         return result;
     }
+
+    public static Line[] Trajectory_creation(Ponto[] x){
+
+        Line[] result_Line = new Line[x.length-1];
+        for (int i = 1;i < x.length;i++){
+            result_Line[i-1] = new Line(x[i-1],x[i]);
+        }
+        return result_Line;
+    }
 }

@@ -28,14 +28,14 @@ class Rectangle extends FiguraGeometrica {
             System.exit(0);
         }
     }
-
-    public static boolean isIntersecting(Rectangle x, Trajetoria[] y) {//confirma se o rectangulo esta a interseptar com o segmento de reta
+    //TODO: verificar se esta certo quando mudar a trajetoria
+    public static boolean isIntersecting(Rectangle x, Trajectory[] y) {//confirma se o rectangulo esta a interseptar com o segmento de reta
         boolean test = false;
             for (int j = 0;j<y.length;j++){
-                boolean a = Line.intersection(x.getA(), x.getB(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
-                boolean b = Line.intersection(x.getB(), x.getC(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
-                boolean c = Line.intersection(x.getC(), x.getD(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
-                boolean d = Line.intersection(x.getA(), x.getD(), y[j].Trajetoria.getA(), y[j].Trajetoria.getB());
+                boolean a = Line.intersection(x.getA(), x.getB(), y[j].getA(j), y[j].getB(j));
+                boolean b = Line.intersection(x.getB(), x.getC(), y[j].getA(j), y[j].getB(j));
+                boolean c = Line.intersection(x.getC(), x.getD(), y[j].getA(j), y[j].getB(j));
+                boolean d = Line.intersection(x.getA(), x.getD(), y[j].getA(j), y[j].getB(j));
 
                 if(a || b || c || d){
                     return true;

@@ -30,4 +30,12 @@ class Ponto {
         return Math.sqrt(dx*dx + dy*dy);
     }
 
+    public static String toPrint(Ponto x){
+        return "(" +
+                x.getX() +
+                ";" +
+                x.getY() +
+                ")";
+    }
+
 }

@@ -10,21 +10,23 @@ public class Main {
         final String answer = sb.toString();
         return answer;
     }
+
+
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner (System.in);
 
         int [] line = readLines.readLine(sc.nextLine());
 
         Constructor<?> constructor;
-        ArrayList<Ponto> pontos = new ArrayList<>();
+        Ponto[] pontos = new Ponto[line.length];
         FiguraGeometrica f;
         String s;
         String [] aos;
-        for (int i = 0; i<line.length;i++){
+        for (int i = 0; i<line.length-1;i++){
             Ponto cordenada = new Ponto(line[i],line[i+1]);
-            pontos.add(cordenada);
+            pontos[i] = cordenada;
         }
-        Trajetoria traj = new Trajetoria(pontos);
+        Trajectory traj = new Trajectory(readLines.Trajectory_creation(pontos));
         while (sc.hasNextLine()) {
             s = sc.nextLine();
             aos = s.split(" ");
