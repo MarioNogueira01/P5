@@ -11,23 +11,36 @@ public class Circunferencia extends FiguraGeometrica{
         this.a = new Ponto(Integer.parseInt(x[1]), Integer.parseInt(x[2]));
         this.raio = Integer.parseInt(x[3]);
     }
-    public static int[] calculateLineEquation(double x1, double y1, double x2, double y2) {
-        double a = (y2 - y1) / (x2 - x1);
-        double b = y1 - a*x1;
-        double c = -a*x1 - b*y1;
-        return new int[] {(int) a, (int) b, (int) c};
+    public static double[] calculateSegmentEquation(double xa, double ya, double xb, double yb) {
+        double dx = xb - xa;
+        double dy = yb - ya;
+        double len = Math.sqrt(dx * dx + dy * dy);
+        double nx = dx / len;
+        double ny = dy / len;
+        return new double[]{xa, ya, nx, ny, len};
     }
-    public static boolean checkCollision(int a, int b, int c, int x, int y, int radius)
-    {
-        double dist = Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
+
+    public static boolean checkCollision(double x, double y, double radius, double[] seg) {
+        double xa = seg[0];
+        double ya = seg[1];
+        double nx = seg[2];
+        double ny = seg[3];
+        double len = seg[4];
+
+        double dx = x - xa;
+        double dy = y - ya;
+
+        double dot = dx * nx + dy * ny;
+
+        if (dot < 0 || dot > len) {
+            return false;
+        }
+
+        double dist = Math.abs(dx * ny - dy * nx);
 
         return radius == dist || radius > dist;
     }
 
-    /**
-     * @param trajetoria
-     * @return retorna true se a trajetoria intersetar com a circunferencia
-     */
     @Override
     public boolean intercecao(Trajectory trajetoria) {
         ArrayList<Line> seg = new ArrayList<>();
@@ -35,8 +48,8 @@ public class Circunferencia extends FiguraGeometrica{
         for (int i = 0; i < trajetoria.getpontos().size() - 1; i++) {
             Ponto pontoA = trajetoria.getpontos().get(i);
             Ponto pontoB = trajetoria.getpontos().get(i + 1);
-            int[] x = calculateLineEquation(pontoA.getX(),pontoA.getY(), pontoB.getX(), pontoB.getY());
-            if (checkCollision(x[0],x[1],x[2],this.a.getX(),this.a.getY(),this.raio)) {
+            double[] segEq = calculateSegmentEquation(pontoA.getX(), pontoA.getY(), pontoB.getX(), pontoB.getY());
+            if (checkCollision(this.a.getX(), this.a.getY(), this.raio, segEq)) {
                 count++;
             }
         }
@@ -44,11 +57,10 @@ public class Circunferencia extends FiguraGeometrica{
     }
 
 
-
     @Override
     public void check(){
         if (this.raio < 0) {
-            System.out.println("Circunferencia: vi");
+            System.out.println("Circunferencia:vi");
             System.exit(0);
         }
     }
