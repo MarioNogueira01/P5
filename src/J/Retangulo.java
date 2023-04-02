@@ -11,7 +11,7 @@ import java.util.ArrayList;
 class Retangulo extends FiguraGeometrica {
      Ponto a,b,c,d;
     public Retangulo(String s){
-        super(s);
+        super();
         String[] x = s.split(" ",-1);
         this.a = new Ponto(Integer.parseInt(x[1]), Integer.parseInt(x[2]));
         this.b = new Ponto(Integer.parseInt(x[3]), Integer.parseInt(x[4]));

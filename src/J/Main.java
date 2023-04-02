@@ -1,29 +1,30 @@
 package J;
+
 import java.lang.reflect.*;
 import java.util.*;
+
 public class Main {
-    public static String capital(String s) {
+    public static String capitalize(String s) {
         String res = s.toLowerCase();
-        Character initial = Character.toUpperCase(res.charAt(0));
+        char initial = Character.toUpperCase(res.charAt(0));
         StringBuilder sb = new StringBuilder(res);
         sb.setCharAt(0, initial);
-        final String answer = sb.toString();
-        return answer;
+        return sb.toString();
     }
-    public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner (System.in);
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        int [] Starting = readLines.readLine(sc.nextLine());
-        Ponto Starting_Point = new Ponto(Starting[0],Starting[1]);
+        int[] starting = readLines.readLine(sc.nextLine());
+        Ponto startingPoint = new Ponto(starting[0], starting[1]);
 
-        int [] finish = readLines.readLine(sc.nextLine());
-        Ponto End_Point = new Ponto(finish[0],finish[1]);
+        int[] finish = readLines.readLine(sc.nextLine());
+        Ponto endPonint = new Ponto(finish[0], finish[1]);
 
         int t = sc.nextInt();
         int[] points_n = new int[t];
 
-        for (int i = 0; i<t;i++){
+        for (int i = 0; i < t; i++) {
             points_n[i] = sc.nextInt();
         }
 
@@ -31,34 +32,44 @@ public class Main {
 
         List<FiguraGeometrica> obstaculos = new ArrayList<>();
         Constructor<?> constructor;
-        ArrayList[] pontos = new ArrayList[t];
+
         FiguraGeometrica f;
         String s;
-        String [] aos;
-        for (int i = 0; i<t;i++){
-            pontos[i] = RandomCreation.random_Trajectory(points_n[i],Starting_Point,End_Point);
-            result[i] = new Trajectory(pontos[i]);
+        String[] aos;
+        for (int i = 0; i < t; i++) {
+            ArrayList<Ponto> test = RandomCreation.random_Trajectory(points_n[i], startingPoint, endPonint);
+            result[i] = new Trajectory(test);
         }
         sc.nextLine();
         while (sc.hasNextLine()) {
             s = sc.nextLine();
             aos = s.split(" ");
             try {
-                Class<?> cl = Class.forName("J." + capital(aos[0]));// da a class que vai ser usada
-                constructor = cl.getConstructor (new Class<?>[] { String.class });
+                Class<?> cl = Class.forName("J." + capitalize(aos[0]));// da a class que vai ser usada
+                constructor = cl.getConstructor(String.class);
                 f = (FiguraGeometrica) constructor.newInstance(s);
                 f.check();
                 obstaculos.add(f);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Tipo de obstaculo desconhecido");
                 System.exit(0);
             }
         }
-        //TODO: ver resultado final o que esta a dar mal
-        for (int i = 0; i<t;i++) {
-            System.out.println(String.format("%f", result[i].avaluation(obstaculos)));
+
+        TrajectoryEvaluation[] evaluations = new TrajectoryEvaluation[t];
+
+        for (int i = 0; i < t; i++) {
+            evaluations[i] = new TrajectoryEvaluation(result[i], result[i].avaluation(obstaculos));
         }
+
+        // Sorting evaluations
+        Arrays.sort(evaluations);
+
+        // Printing sorted trajectories
+        for (TrajectoryEvaluation eval : evaluations) {
+            System.out.println(eval.trajectory.toString());
+        }
+
         sc.close();
     }
 }

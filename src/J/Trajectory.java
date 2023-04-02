@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Trajectory {
 
-    private ArrayList<Ponto> ponto;
+    private final ArrayList<Ponto> ponto;
 
 
     public Trajectory(ArrayList<Ponto> ponto) {
@@ -20,30 +20,17 @@ public class Trajectory {
         return ponto;
     }
 
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i < ponto.size(); i++) {
-            sb.append(ponto.get(i).toString());
+            sb.append(ponto.get(i).toPrint());
             if (i < ponto.size() - 1) {
                 sb.append(" ");
             }
         }
         sb.append("]");
         return sb.toString();
-    }
-    public boolean vertraj(){
-        if(ponto.size() < 3){
-            return false;
-        }
-        int n = ponto.size();
-        for(int i = 1; i < n; i++) {
-            if (ponto.get(i-1).getX()> ponto.get(i).getX() && ponto.get(i-1).getY() > ponto.get(i).getY()){
-                return false;
-            }
-        }
-        return true;
     }
 
     public double distance(){
