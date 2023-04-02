@@ -11,53 +11,56 @@ public class Circunferencia extends FiguraGeometrica{
         this.a = new Ponto(Integer.parseInt(x[1]), Integer.parseInt(x[2]));
         this.raio = Integer.parseInt(x[3]);
     }
+    public static double[] calculateSegmentEquation(double xa, double ya, double xb, double yb) {
+        double dx = xb - xa;
+        double dy = yb - ya;
+        double len = Math.sqrt(dx * dx + dy * dy);
+        double nx = dx / len;
+        double ny = dy / len;
+        return new double[]{xa, ya, nx, ny, len};
+    }
+
+    public static boolean checkCollision(double x, double y, double radius, double[] seg) {
+        double xa = seg[0];
+        double ya = seg[1];
+        double nx = seg[2];
+        double ny = seg[3];
+        double len = seg[4];
+
+        double dx = x - xa;
+        double dy = y - ya;
+
+        double dot = dx * nx + dy * ny;
+
+        if (dot < 0 || dot > len) {
+            return false;
+        }
+
+        double dist = Math.abs(dx * ny - dy * nx);
+
+        return radius == dist || radius > dist;
+    }
 
     @Override
-    public boolean intercecao(Trajectory y) {
-        int size = y.getpontos().size();
-        for (int i=0;i<size;i++){
-            Ponto p1 = y.getpontos().get(i);
-            Ponto p2 = y.getpontos().get(i+1);
-        double d1 = Math.sqrt(Math.pow(p1.getX() - a.getX(), 2) + Math.pow(p1.getY() - a.getY(), 2));
-        double d2 = Math.sqrt(Math.pow(p2.getX() - a.getX(), 2) + Math.pow(p2.getY() - a.getY(), 2));
-        if (d1 < raio && d2 < raio) {
-            return false;
-        } else if (d1 < raio || d2 < raio) {
-            return true;
+    public boolean intercecao(Trajectory trajetoria) {
+        ArrayList<Line> seg = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < trajetoria.getpontos().size() - 1; i++) {
+            Ponto pontoA = trajetoria.getpontos().get(i);
+            Ponto pontoB = trajetoria.getpontos().get(i + 1);
+            double[] segEq = calculateSegmentEquation(pontoA.getX(), pontoA.getY(), pontoB.getX(), pontoB.getY());
+            if (checkCollision(this.a.getX(), this.a.getY(), this.raio, segEq)) {
+                count++;
+            }
         }
-        double m = (double) (p2.getY() - p1.getY()) / (p2.getX() - p1.getX());
-        double b = p1.getY() - m * p1.getX();
-        double A = Math.pow(m, 2) + 1;
-        double B = 2 * m * b - 2 * a.getX() - 2 * a.getY() * m;
-        double C = Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2) + Math.pow(b, 2) - 2 * a.getY() * b - Math.pow(raio, 2);
-        double delta = Math.pow(B, 2) - 4 * A * C;
-        if (delta < 0) {
-            return false;
-        }
-        double x1 = (-B + Math.sqrt(delta)) / (2 * A);
-        double y1 = m * x1 + b;
-        double x2 = (-B - Math.sqrt(delta)) / (2 * A);
-        double y2 = m * x2 + b;
-        double minX = Math.min(p1.getX(), p2.getX());
-        double maxX = Math.max(p1.getX(), p2.getY());
-        double minY = Math.min(p1.getY(), p2.getY());
-        double maxY = Math.max(p1.getY(), p2.getY());
-        if (x1 >= minX && x1 <= maxX && y1 >= minY && y1 <= maxY) {
-            return true;
-        }
-        if (x2 >= minX && x2 <= maxX && y2 >= minY && y2 <= maxY) {
-            return true;
-        }
-        }
-        return false;
-
+        return count != 0;
     }
 
 
     @Override
     public void check(){
         if (this.raio < 0) {
-            System.out.println("Circunferencia: vi");
+            System.out.println("Circunferencia:vi");
             System.exit(0);
         }
     }
