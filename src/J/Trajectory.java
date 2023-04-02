@@ -72,5 +72,4 @@ public class Trajectory {
         return 1/(dist + Math.exp(num));
 
     }
-
 }

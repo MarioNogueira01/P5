@@ -23,7 +23,7 @@ class Retangulo extends FiguraGeometrica {
     public boolean intercecao(Trajectory y) {
         ArrayList<Ponto> pontos = y.getpontos();
         boolean test = false;
-        for (int j = 0;j<pontos.size();j++){
+        for (int j = 0;j<pontos.size()-1;j++){
             boolean a = Line.intersection(this.getA(), this.getB(), pontos.get(j), pontos.get(j+1));
             boolean b = Line.intersection(this.getB(), this.getC(), pontos.get(j), pontos.get(j+1));
             boolean c = Line.intersection(this.getC(), this.getD(), pontos.get(j), pontos.get(j+1));
